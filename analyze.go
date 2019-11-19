@@ -1,7 +1,6 @@
 package pulsedive
 import (
 	"io/ioutil"
-	"log"
 	"net/http"
 	"crypto/tls"
 	"time"
@@ -15,7 +14,6 @@ import (
 // Analyze adding to the Queue for Analyze
 func Analyze(ioc string) (int, error){
 	iocEnc := base64.StdEncoding.EncodeToString([]byte(ioc))
-	// log.Println(iocEnc)
 	data := url.Values{}
 	data.Set("ioc", iocEnc)
 	data.Set("enrich", "1")
@@ -25,7 +23,6 @@ func Analyze(ioc string) (int, error){
 
 	req, err := http.NewRequest("POST","https://pulsedive.com/api/analyze.php", strings.NewReader(data.Encode()))
 	if err != nil {
-			log.Print(err)
 			return 0, err
 	}
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
@@ -39,13 +36,12 @@ func Analyze(ioc string) (int, error){
 	client := &http.Client{Transport: trt}
 	resp, err := client.Do(req)
 	if err != nil {
-			log.Println("error")
 			return 0, err
 	}
-	// log.Println(resp)
+	
 	defer resp.Body.Close()
 	resBody, err := ioutil.ReadAll(resp.Body)
-	// log.Println(string(resBody))
+
 	var results PDAResponse
 	json.Unmarshal(resBody, &results)
 	return results.Qid, nil

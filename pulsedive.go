@@ -1,7 +1,6 @@
 package pulsedive
 import (
 	"io/ioutil"
-	"log"
 	"net/http"
 	"crypto/tls"
 	"time"
@@ -30,7 +29,6 @@ type PDAResponse struct {
 func Get(query, path string) ([]byte, error) {
 	req, err := http.NewRequest("GET", pulsediveURL + path, nil)
 	if err != nil {
-			log.Print(err)
 			return nil, err
 	}
 	req.URL.RawQuery = query
@@ -43,13 +41,12 @@ func Get(query, path string) ([]byte, error) {
 	client := &http.Client{Transport: trt}
 	resp, err := client.Do(req)
 	if err != nil {
-			log.Println("error")
 			return nil, err
 	}
-	// log.Println(resp)
+
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
-	// log.Println(string(body))
+
 	return body, nil
 }
 
