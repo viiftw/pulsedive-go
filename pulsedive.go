@@ -46,7 +46,9 @@ func Get(query, path string) ([]byte, error) {
 
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
-
+	if err != nil {
+		return nil, err
+	}
 	return body, nil
 }
 

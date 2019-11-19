@@ -41,7 +41,9 @@ func Analyze(ioc string) (int, error){
 	
 	defer resp.Body.Close()
 	resBody, err := ioutil.ReadAll(resp.Body)
-
+	if err != nil {
+		return 0, err
+	}
 	var results PDAResponse
 	json.Unmarshal(resBody, &results)
 	return results.Qid, nil
