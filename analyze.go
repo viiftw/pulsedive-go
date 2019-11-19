@@ -1,18 +1,19 @@
 package pulsedive
+
 import (
-	"io/ioutil"
-	"net/http"
 	"crypto/tls"
-	"time"
 	"encoding/base64"
 	"encoding/json"
+	"io/ioutil"
+	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // Analyze adding to the Queue for Analyze
-func Analyze(ioc string) (int, error){
+func Analyze(ioc string) (int, error) {
 	iocEnc := base64.StdEncoding.EncodeToString([]byte(ioc))
 	data := url.Values{}
 	data.Set("ioc", iocEnc)
@@ -21,24 +22,24 @@ func Analyze(ioc string) (int, error){
 	data.Set("pretty", "1")
 	data.Set("key", apiKey)
 
-	req, err := http.NewRequest("POST","https://pulsedive.com/api/analyze.php", strings.NewReader(data.Encode()))
+	req, err := http.NewRequest("POST", "https://pulsedive.com/api/analyze.php", strings.NewReader(data.Encode()))
 	if err != nil {
-			return 0, err
+		return 0, err
 	}
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
 	req.Header.Add("Content-Length", strconv.Itoa(len(data.Encode())))
 	trt := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+		TLSClientConfig:    &tls.Config{InsecureSkipVerify: true},
 		MaxIdleConns:       10,
 		IdleConnTimeout:    30 * time.Second,
 		DisableCompression: true,
-	}	
+	}
 	client := &http.Client{Transport: trt}
 	resp, err := client.Do(req)
 	if err != nil {
-			return 0, err
+		return 0, err
 	}
-	
+
 	defer resp.Body.Close()
 	resBody, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
@@ -50,7 +51,7 @@ func Analyze(ioc string) (int, error){
 }
 
 // AnalyzeResult get result from Analyze Retrieving the Results api
-func AnalyzeResult(qid int) ([]byte, error){
+func AnalyzeResult(qid int) ([]byte, error) {
 	q := url.Values{}
 	q.Add("pretty", pretty)
 	q.Add("key", apiKey)

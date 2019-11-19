@@ -1,11 +1,12 @@
 package pulsedive
+
 import (
 	"net/url"
 	"strconv"
 )
 
 // IndicatorByID implement api Indicators By Indicator ID
-func IndicatorByID(id int) ([]byte, error){
+func IndicatorByID(id int) ([]byte, error) {
 	q := url.Values{}
 	q.Add("schema", schema)
 	q.Add("iid", strconv.Itoa(id))
@@ -15,7 +16,7 @@ func IndicatorByID(id int) ([]byte, error){
 }
 
 // IndicatorByValue implement api Indicators By Value
-func IndicatorByValue(indicatorValue string) ([]byte, error){
+func IndicatorByValue(indicatorValue string) ([]byte, error) {
 	q := url.Values{}
 	q.Add("indicator", indicatorValue)
 	q.Add("pretty", pretty)
@@ -24,7 +25,7 @@ func IndicatorByValue(indicatorValue string) ([]byte, error){
 }
 
 // IndicatorLinks implement api Indicators Links
-func IndicatorLinks(id int) ([]byte, error){
+func IndicatorLinks(id int) ([]byte, error) {
 	q := url.Values{}
 	q.Add("iid", strconv.Itoa(id))
 	q.Add("get", "links")
@@ -34,7 +35,7 @@ func IndicatorLinks(id int) ([]byte, error){
 }
 
 // IndicatorProperties implement api Indicators Properties
-func IndicatorProperties(id int) ([]byte, error){
+func IndicatorProperties(id int) ([]byte, error) {
 	q := url.Values{}
 	q.Add("iid", strconv.Itoa(id))
 	q.Add("get", "properties")

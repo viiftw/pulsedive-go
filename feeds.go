@@ -1,11 +1,12 @@
 package pulsedive
+
 import (
 	"net/url"
 	"strconv"
 )
 
 // FeedID implement api Feeds By Feed ID
-func FeedID(id int) ([]byte, error){
+func FeedID(id int) ([]byte, error) {
 	q := url.Values{}
 	q.Add("fid", strconv.Itoa(id))
 	q.Add("pretty", pretty)
@@ -14,7 +15,7 @@ func FeedID(id int) ([]byte, error){
 }
 
 // FeedName implement api Feeds By Feed Name and Organization
-func FeedName(name, organization string) ([]byte, error){
+func FeedName(name, organization string) ([]byte, error) {
 	q := url.Values{}
 	q.Add("feed", name)
 	q.Add("organization", organization)
@@ -24,7 +25,7 @@ func FeedName(name, organization string) ([]byte, error){
 }
 
 // FeedLink implement api Feeds Linked Indicators
-func FeedLink(id int) ([]byte, error){
+func FeedLink(id int) ([]byte, error) {
 	q := url.Values{}
 	q.Add("fid", strconv.Itoa(id))
 	q.Add("get", "links")

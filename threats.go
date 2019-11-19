@@ -1,11 +1,12 @@
 package pulsedive
+
 import (
 	"net/url"
 	"strconv"
 )
 
 // ThreatByID implement api Threats By Threat ID
-func ThreatByID(id int) ([]byte, error){
+func ThreatByID(id int) ([]byte, error) {
 	q := url.Values{}
 	q.Add("tid", strconv.Itoa(id))
 	q.Add("pretty", pretty)
@@ -14,7 +15,7 @@ func ThreatByID(id int) ([]byte, error){
 }
 
 // ThreatByName implement api Threats By Threat Name
-func ThreatByName(name string) ([]byte, error){
+func ThreatByName(name string) ([]byte, error) {
 	q := url.Values{}
 	q.Add("threat", name)
 	q.Add("pretty", pretty)
@@ -23,7 +24,7 @@ func ThreatByName(name string) ([]byte, error){
 }
 
 // ThreatSummary implement api Threats By Threats Indicator Summary
-func ThreatSummary(id int) ([]byte, error){
+func ThreatSummary(id int) ([]byte, error) {
 	q := url.Values{}
 	q.Add("tid", strconv.Itoa(id))
 	q.Add("get", "links")
@@ -35,7 +36,7 @@ func ThreatSummary(id int) ([]byte, error){
 }
 
 // ThreatLink implement api Threats By Threats Linked Indicators
-func ThreatLink(id int) ([]byte, error){
+func ThreatLink(id int) ([]byte, error) {
 	q := url.Values{}
 	q.Add("tid", strconv.Itoa(id))
 	q.Add("get", "links")

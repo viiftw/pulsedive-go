@@ -1,22 +1,23 @@
 package pulsedive
+
 import (
+	"crypto/tls"
 	"io/ioutil"
 	"net/http"
-	"crypto/tls"
-	"time"
 	"strconv"
+	"time"
 )
 
 var (
-	apiKey = ""
-	pretty = "1"
-	schema = "1"
-	pulsediveURL = "https://pulsedive.com/api"
-	risks = []string{"unknown", "none", "low", "medium", "high", "critical", "retired"}
+	apiKey         = ""
+	pretty         = "1"
+	schema         = "1"
+	pulsediveURL   = "https://pulsedive.com/api"
+	risks          = []string{"unknown", "none", "low", "medium", "high", "critical", "retired"}
 	indicatorTypes = []string{"ip", "ipv6", "url", "domain", "artifact"}
-	categories = []string{"general", "abuse", "apt", "attack", "botnet", "crime",
-              "exploitkit", "fraud", "group", "malware", "proxy", "pup",
-							"reconnaissance", "spam", "terrorism", "phishing", "vulnerability"}
+	categories     = []string{"general", "abuse", "apt", "attack", "botnet", "crime",
+		"exploitkit", "fraud", "group", "malware", "proxy", "pup",
+		"reconnaissance", "spam", "terrorism", "phishing", "vulnerability"}
 )
 
 // PDAResponse define for pulsedive api queue response
@@ -27,21 +28,21 @@ type PDAResponse struct {
 
 // Get create a get request
 func Get(query, path string) ([]byte, error) {
-	req, err := http.NewRequest("GET", pulsediveURL + path, nil)
+	req, err := http.NewRequest("GET", pulsediveURL+path, nil)
 	if err != nil {
-			return nil, err
+		return nil, err
 	}
 	req.URL.RawQuery = query
 	trt := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+		TLSClientConfig:    &tls.Config{InsecureSkipVerify: true},
 		MaxIdleConns:       10,
 		IdleConnTimeout:    30 * time.Second,
 		DisableCompression: true,
-	}	
+	}
 	client := &http.Client{Transport: trt}
 	resp, err := client.Do(req)
 	if err != nil {
-			return nil, err
+		return nil, err
 	}
 
 	defer resp.Body.Close()

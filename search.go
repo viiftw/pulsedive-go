@@ -1,10 +1,11 @@
 package pulsedive
+
 import (
 	"net/url"
 )
 
 // SearchIndicators implement api Search Indicators
-func SearchIndicators(value string, attributes[]string, threats []string, feeds []string) ([]byte, error){
+func SearchIndicators(value string, attributes []string, threats []string, feeds []string) ([]byte, error) {
 	q := url.Values{}
 	q.Add("value", value)
 	for _, indicatorType := range indicatorTypes {
@@ -30,7 +31,7 @@ func SearchIndicators(value string, attributes[]string, threats []string, feeds 
 }
 
 // SearchToCSV implement api Search Exporting to CSV
-func SearchToCSV(value string, attributes[]string, threats []string, feeds []string) ([]byte, error){
+func SearchToCSV(value string, attributes []string, threats []string, feeds []string) ([]byte, error) {
 	q := url.Values{}
 	q.Add("value", value)
 	q.Add("property", "content-type:text/html")
@@ -58,7 +59,7 @@ func SearchToCSV(value string, attributes[]string, threats []string, feeds []str
 }
 
 // SearchThreat implement api Search Threats
-func SearchThreat(value string, attributes[]string, threats []string, feeds []string) ([]byte, error){
+func SearchThreat(value string, attributes []string, threats []string, feeds []string) ([]byte, error) {
 	q := url.Values{}
 	q.Add("search", "threat")
 	q.Add("value", value)
@@ -87,7 +88,7 @@ func SearchThreat(value string, attributes[]string, threats []string, feeds []st
 }
 
 // SearchFeed implement api Search Feeds
-func SearchFeed(value string) ([]byte, error){
+func SearchFeed(value string) ([]byte, error) {
 	q := url.Values{}
 	q.Add("search", "feed")
 	q.Add("value", value)
