@@ -23,18 +23,6 @@ func main() {
     // => {"iid"=>53929,"type"=>"domain","indicator"=>"pulsedive.com","risk"=>"medium", ...
 }
 ```
-### Search Feed
-```go
-func main() {
-    feeds := []string{"zeus bad domains", "zeus bad ips"}
-    body, err = pulsedive.SearchFeed("zeus")
-    if err != nil {
-      log.Println(err)
-    }
-    log.Println(string(body))
-    // => {"results":[{"fid":1,"name":"Zeus Bad Domains","category":"malware"...
-}
-```
 
 ## Support API
 ```go
