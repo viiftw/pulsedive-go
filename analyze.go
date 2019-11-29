@@ -3,7 +3,7 @@ package pulsedive
 import (
 	"crypto/tls"
 	"encoding/base64"
-	"encoding/json"
+	// "encoding/json"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -13,7 +13,7 @@ import (
 )
 
 // Analyze adding to the Queue for Analyze
-func Analyze(ioc string) (int, error) {
+func Analyze(ioc string) ([]byte, error) {
 	iocEnc := base64.StdEncoding.EncodeToString([]byte(ioc))
 	data := url.Values{}
 	data.Set("ioc", iocEnc)
@@ -24,7 +24,7 @@ func Analyze(ioc string) (int, error) {
 
 	req, err := http.NewRequest("POST", "https://pulsedive.com/api/analyze.php", strings.NewReader(data.Encode()))
 	if err != nil {
-		return 0, err
+		return nil, err
 	}
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
 	req.Header.Add("Content-Length", strconv.Itoa(len(data.Encode())))
@@ -37,17 +37,17 @@ func Analyze(ioc string) (int, error) {
 	client := &http.Client{Transport: trt}
 	resp, err := client.Do(req)
 	if err != nil {
-		return 0, err
+		return nil, err
 	}
 
 	defer resp.Body.Close()
 	resBody, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return 0, err
+		return nil, err
 	}
-	var results PDAResponse
-	json.Unmarshal(resBody, &results)
-	return results.Qid, nil
+	// var results PDAResponse
+	// json.Unmarshal(resBody, &results)
+	return resBody, nil
 }
 
 // AnalyzeResult get result from Analyze Retrieving the Results api

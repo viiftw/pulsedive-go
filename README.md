@@ -2,43 +2,31 @@
 A Golang library for [Pulsedive](https://pulsedive.com/) API
 
 ## Usage
-
+### Indicator By Value
 ```go
 package main
 import (
     "log"
-    "time"
     "github.com/viiftw/pulsedive-go"
 )
 
 func main() {
     // Load your Pulsedive API key <YOUR-API-KEY>: string, Pretty: true
     pulsedive.Pulsedive(<YOUR-API-KEY>, true)
+
     // Indicators
     body, err := pulsedive.IndicatorByValue("pulsedive.com")
-    body, err = pulsedive.IndicatorByID(2)
-    body, err = pulsedive.IndicatorLinks(2)
-    body, err = pulsedive.IndicatorProperties(2)
-    // Threats
-    body, err = pulsedive.ThreatByID(1)
-    body, err = pulsedive.ThreatByName("Zeus")
-    body, err = pulsedive.ThreatLink(1)
-    body, err = pulsedive.ThreatSummary(1)
-    // Feeds
-    body, err = pulsedive.FeedID(1)
-    body, err = pulsedive.FeedLink(1)
-    body, err = pulsedive.FeedName("Zeus Bad Domains", "abuse.ch")
-    // Analyze
-    qid, err := pulsedive.Analyze("google.com")
-    time.Sleep(5 * time.Second) // Wait for analyze
-    body, err = pulsedive.AnalyzeResult(qid)
-    // Search
-    attributes := []string{"http", "443"}
-    threats := []string{"zeus", "banjori"}
+    if err != nil {
+      log.Println(err)
+    }
+    log.Println(string(body))
+    // => {"iid"=>53929,"type"=>"domain","indicator"=>"pulsedive.com","risk"=>"medium", ...
+}
+```
+### Search Feed
+```go
+func main() {
     feeds := []string{"zeus bad domains", "zeus bad ips"}
-    body, err = pulsedive.SearchIndicators("", attributes, threats, feeds)
-    body, err = pulsedive.SearchThreat("zeus", attributes, threats, feeds)
-    body, err = pulsedive.SearchToCSV("", attributes, threats, feeds)
     body, err = pulsedive.SearchFeed("zeus")
     if err != nil {
       log.Println(err)
@@ -46,6 +34,32 @@ func main() {
     log.Println(string(body))
     // => {"results":[{"fid":1,"name":"Zeus Bad Domains","category":"malware"...
 }
+```
+
+## Support API
+```go
+  // Indicators
+  pulsedive.IndicatorByID(id int) ([]byte, error)
+  pulsedive.IndicatorByValue(indicatorValue string) ([]byte, error)
+  pulsedive.IndicatorLinks(id int) ([]byte, error)
+  pulsedive.IndicatorProperties(id int) ([]byte, error)
+  // Threats
+  pulsedive.ThreatByID(id int) ([]byte, error)
+  pulsedive.ThreatByName(name string) ([]byte, error)
+  pulsedive.ThreatSummary(id int) ([]byte, error)
+  pulsedive.ThreatLink(id int) ([]byte, error)
+  // Feeds
+  pulsedive.FeedID(id int) ([]byte, error)
+  pulsedive.FeedName(name, organization string) ([]byte, error)
+  pulsedive.FeedLink(id int) ([]byte, error)
+  // Analyze
+  pulsedive.Analyze(ioc string) ([]byte, error)
+  pulsedive.AnalyzeResult(qid int) ([]byte, error)
+  // Search
+  pulsedive.SearchIndicators(value string, attributes []string, threats []string, feeds []string) ([]byte, error)
+  pulsedive.SearchToCSV(value string, attributes []string, threats []string, feeds []string) ([]byte, error)
+  pulsedive.SearchThreat(value string, attributes []string, threats []string, feeds []string) ([]byte, error)
+  pulsedive.SearchFeed(value string) ([]byte, error)
 ```
 
 ## License
