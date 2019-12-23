@@ -1,7 +1,8 @@
 # pulsedive-go
 [![License](https://img.shields.io/badge/license-MIT-_red.svg)](https://opensource.org/licenses/MIT)
 [![Go Report Card](https://goreportcard.com/badge/github.com/viiftw/pulsedive-go)](https://goreportcard.com/report/github.com/viiftw/pulsedive-go)  
-A Golang library for [Pulsedive](https://pulsedive.com/) API
+A Golang library for [Pulsedive](https://pulsedive.com/) API  
+This library is not production-ready yet, and breaking changes can still occur.
 
 ## Usage
 ### Indicator By Value
